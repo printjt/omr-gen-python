@@ -1,0 +1,6 @@
+scipy
+numpy
+flask
+imutils
+reportlab
+opencv-python
