@@ -1,20 +1,14 @@
-import cv2
-import numpy as np
-from flask import Flask, request, jsonify, render_template_string, send_file, Response
 import base64
-import json
-from datetime import datetime
-import os
+import io
+
+import cv2
 import imutils
+import numpy as np
+from flask import Flask, request, jsonify, send_file
 from imutils import contours
 from imutils.perspective import four_point_transform
-from reportlab.lib.pagesizes import letter, A4
+from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch, mm
-from reportlab.graphics.shapes import Circle, Drawing
-from reportlab.graphics import renderPDF
-from reportlab.lib import colors
-import io
 
 app = Flask(__name__)
 
@@ -84,10 +78,15 @@ class OMRGenerator:
 
         # Add corner markers (only on the first page)
         marker_size = 4
-        c.circle(self.margin, self.page_height - self.margin, marker_size, fill=1)
-        c.circle(self.page_width - self.margin, self.page_height - self.margin, marker_size, fill=1)
-        c.circle(self.margin, self.margin + 50, marker_size, fill=1)
-        c.circle(self.page_width - self.margin, self.margin + 50, marker_size, fill=1)
+        c.drawImage("omr_marker.jpg", self.margin, self.page_height - self.margin, height=20, width=20)
+        c.drawImage("omr_marker.jpg", self.page_width - self.margin, self.page_height - self.margin, height=20,
+                    width=20)
+        c.drawImage("omr_marker.jpg", self.margin, self.margin + 50, height=20, width=20)
+        c.drawImage("omr_marker.jpg", self.page_width - self.margin, self.margin + 50, height=20, width=20)
+        # c.circle(self.margin, self.page_height - self.margin, marker_size, fill=1)
+        # c.circle(self.page_width - self.margin, self.page_height - self.margin, marker_size, fill=1)
+        # c.circle(self.margin, self.margin + 50, marker_size, fill=1)
+        # c.circle(self.page_width - self.margin, self.margin + 50, marker_size, fill=1)
 
         c.save()
         buffer.seek(0)
