@@ -224,7 +224,7 @@ def generate_omr():
     num_questions = data.get('num_questions', 20)
     if num_questions > 30:
         return {"error": "Too many questions"}, 400
-    choices = data.get('choices', ['A', 'B', 'C', 'D', 'E'])
+    choices = data.get('choices', ['A', 'B', 'C', 'D'])
     student_info = data.get('student_info', True)
 
     pdf_buffer = omr_generator.create_omr_sheet(num_questions, choices, student_info, title)
